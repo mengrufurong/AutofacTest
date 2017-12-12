@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autofac;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +11,13 @@ namespace AutofacTest
     {
         static void Main(string[] args)
         {
-            IDatabase database = new SqlDatabase();
-            DatabaseManager databaseManager = new DatabaseManager(database);
-            databaseManager.Search("123");
+            var builder = new ContainerBuilder();
+            var sss= builder.RegisterType<DatabaseManager>();
+            builder.RegisterType<SqlDatabase>().As<IDatabase>();
+            using(var container = builder.Build())
+            {
+
+            }
             Console.ReadKey();
         }
     }
